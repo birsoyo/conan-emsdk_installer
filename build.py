@@ -2,20 +2,16 @@
 # -*- coding: utf-8 -*-
 
 
-from bincrafters import build_template_default
+from bincrafters import build_template_installer
 import platform
 import os
 
 
 if __name__ == "__main__":
 
-    builder = build_template_default.get_builder()
-    builder.builds = []
+    builder = build_template_installer.get_builder()
 
     settings = dict()
-    settings['compiler'] = 'clang'
-    settings['compiler.version'] = '5.0'
-    settings['compiler.libcxx'] = 'libc++'
     settings['arch_build'] = 'x86_64'
 
     if platform.system() == 'Windows':
@@ -25,6 +21,5 @@ if __name__ == "__main__":
     elif platform.system() == 'Darwin':
         settings['os_build'] = 'Macos'
 
-    builder.add(settings=settings.copy(), options={}, env_vars={}, build_requires={})
-
+    builder.add(settings=settings.copy())
     builder.run()

@@ -4,21 +4,16 @@
 
 from conans import ConanFile, CMake, tools, RunEnvironment
 import os
+import io
 
 
 class TestPackageConan(ConanFile):
-    settings = "os", "compiler", "build_type", "arch"
-    generators = "cmake"
-
     def build(self):
-        cmake = CMake(self, generator='NMake Makefiles' if os.name == 'nt' else 'Unix Makefiles')
-        cmake.configure()
-        cmake.build()
+        pass
 
     def test(self):
-        with tools.environment_append(RunEnvironment(self).vars):
-            with tools.chdir('bin'):
-                node = 'node.exe' if os.name == 'nt' else 'node'
-                # FIXME : hard-coded version of nodejs
-                node = os.path.join(os.environ['EMSDK'], 'node', '8.9.1_64bit', 'bin', node)
-                self.run('%s test_package.js' % node)
+        output = io.StringIO()
+        self.run("emcc --version", output=output)
+        self.output.info(f"Installed: {str(output.getvalue())}")
+        ver = str(self.requires["emsdk_installer"].conan_reference.version)
+        assert(ver in str(output.getvalue()))

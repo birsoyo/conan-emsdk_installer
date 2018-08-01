@@ -10,7 +10,7 @@ class EmSDKInstallerConan(ConanFile):
     name = "emsdk_installer"
     version = "1.37.40"
     description = "Emscripten is an Open Source LLVM to JavaScript compiler"
-    url = "https://github.com/bincrafters/conan-emsdk_installer"
+    url = "https://github.com/birsoyo/conan-emsdk_installer"
     homepage = "https://github.com/kripken/emscripten"
     license = "MIT"
     exports = ["LICENSE.md"]
@@ -18,10 +18,10 @@ class EmSDKInstallerConan(ConanFile):
     settings = {
         "os_build": ['Windows', 'Linux', 'Macos'],
         "arch_build": ['x86_64'],
-        "compiler": ['clang']
     }
     no_copy_source = True
     short_paths = True
+    build_policy = "missing"
 
     def source(self):
         source_url = 'https://github.com/juj/emsdk/archive/master.zip'
